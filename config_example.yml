@@ -1,0 +1,26 @@
+# sapphone !!! :3
+# you have to change line 49 on main.py to point to your config, Lmbao
+# strings that use escapes (\) should be contained in 'single quotation marks'
+
+# file sapphone reads from
+target_file: '/home/gelvetica/PycharmProjects/sapphone/test.txt'
+# regex pattern for detecting message, the content of the first group will be read aloud
+target_pattern: '(.*)'
+# how often sapphone should check the target file for changes
+refresh_rate: 0.1
+tts:
+  # See pyttsx docs: https://pyttsx3.readthedocs.io/en/latest/engine.html
+  voice: 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0'
+  rate: 140
+  # Specify output device for tts, Windows only
+  output: CABLE Input (VB-Audio Virtual Cable)
+# Substitute words in the message before reading aloud
+basic_substitutions:
+  # target: replacement
+  dr: doctor
+  bc: because
+# run re.sub on message before reading alou
+regex_substitutions:
+  # pattern: string
+  '\B:3\b': meow
+    
