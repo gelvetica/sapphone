@@ -1,8 +1,7 @@
 import re
 import yaml
-import pyttsx3
 import time
-
+import tts
 
 def load_config(file):
     with open(file) as f:
@@ -25,28 +24,11 @@ def follow(file, rate):
             time.sleep(rate)
 
 
-# HACK: Route TTS through Virtual Audio Cable, Windows only
-def set_engine_output(engine, output_name):
-    tts = engine.proxy._driver._tts
-    for output in tts.GetAudioOutputs():
-        if output_name in output.GetDescription():
-            tts.AudioOutput = output
-            return
-    print("Unable to find specified audio device, using default")
-
-
-def set_engine_voice(engine, voice):
-    try:
-        engine.setProperty("voice", voice)
-    except:
-        print("Unable to find specified voice, using default")
-
-
 def replace(match):
     return REPL_INDEX[match.lastindex - 1]
 
 
-config = load_config("config.yml")
+config = load_config("../config.yml")
 
 
 REPL_DICT = config["basic_substitutions"]
@@ -55,13 +37,7 @@ REPL_INDEX = [k for k in REPL_DICT.values()]
 
 
 def __main__():
-    engine = pyttsx3.init()
-    if "output" in config["tts"]:
-        set_engine_output(engine, config["tts"]["output"])
-    if "voice" in config["tts"]:
-        set_engine_voice(engine, config["tts"]["voice"])
-    if "rate" in config["tts"]:
-        engine.setProperty('rate', config["tts"]["rate"])
+    engine = tts.SapphoneTTS(config["tts"]["engine"], config["tts"]["engines"][config["tts"]["engine"]])
 
     logfile = open(config["target_file"], "r", encoding='utf-8')
     loglines = follow(logfile, config["refresh_rate"])
@@ -76,8 +52,7 @@ def __main__():
                 message = re.sub(pattern, substitution, message)
 
             print(f"Speaking message: {message}")
-            engine.say(message)
-            engine.runAndWait()
+            engine.speak(message)
 
 
 if __name__ == "__main__":
