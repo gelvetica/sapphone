@@ -15,6 +15,12 @@ tts:
   engine: sam
   engines:
     # engine: engine config
+    dectalk:
+      advanced:
+        prefix: "[:phone on]"
+        suffix: ""
+      engine:
+        path_to_executable: '/home/gelvetica/dectalk/say'
     sam:
       voice:
         speed: 72
