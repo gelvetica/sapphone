@@ -9,11 +9,33 @@ target_pattern: '(.*)'
 # how often sapphone should check the target file for changes
 refresh_rate: 0.1
 tts:
-  # See pyttsx docs: https://pyttsx3.readthedocs.io/en/latest/engine.html
-  voice: 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0'
-  rate: 140
-  # Specify output device for tts, Windows only
-  output: CABLE Input (VB-Audio Virtual Cable)
+  # disabling does not do anything currently
+  enabled: true
+  # specify which engine to use
+  engine: sam
+  engines:
+    # engine: engine config
+    sapi:
+      voice:
+        voice: 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0'
+        rate: 0
+    dectalk:
+      advanced:
+        prefix: "[:phone on]"
+        suffix: ""
+      engine:
+        path_to_executable: '/home/gelvetica/dectalk/say'
+    sam:
+      voice:
+        speed: 72
+        pitch: 64
+        mouth: 128
+        throat: 128
+      pronunciation:
+        phonetic: false
+        sing: false
+      engine:
+        path_to_executable: '/home/gelvetica/SAM/sam'
 # Substitute words in the message before reading aloud
 basic_substitutions:
   # target: replacement
