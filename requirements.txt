@@ -2,3 +2,4 @@ PyYAML==6.0.2
 comtypes~=1.4.6
 pydantic~=2.10.3
 mpv~=1.0.7
+gTTS~=2.5.4

@@ -37,6 +37,13 @@ tts:
         moderncmu: true
       engine:
         path_to_executable: '/home/gelvetica/SAM/sam-linux'
+    google-tts:
+      # See gTTS manual for guides on changing the accent https://gtts.readthedocs.io/en/stable/module.html#localized-accents
+      # you can be british !!!!
+      voice:
+        lang: en
+        tld: com
+        slow: False
 # Substitute words in the message before reading aloud
 basic_substitutions:
   # target: replacement
