@@ -1,27 +1,18 @@
 import re
 import yaml
 import time
-import pyaudio
-import wave
+import mpv
 import tempfile
 import os
 import tts
 
 class Audio:
     def __init__(self):
-        self.audio = pyaudio.PyAudio()
+        self.audio = mpv.MPV()
 
     def play_sound(self, path):
-        with wave.open(path, 'rb') as output:
-            stream = self.audio.open(format=self.audio.get_format_from_width(output.getsampwidth()),
-                                     channels=output.getnchannels(),
-                                     rate=output.getframerate(),
-                                     output=True)
-
-            while len(data := output.readframes(1024)):
-                stream.write(data)
-
-            stream.close()
+        self.audio.play(path)
+        self.audio.wait_for_playback()
 
 def load_config(file):
     with open(file) as f:
