@@ -8,6 +8,7 @@ import tempfile
 import os
 import tts
 
+
 class Audio:
     def __init__(self):
         self.audio = mpv.MPV()
@@ -16,13 +17,10 @@ class Audio:
         self.audio.play(path)
         self.audio.wait_for_playback()
 
+
 def load_config(file):
     with open(file) as f:
         return yaml.safe_load(f)
-
-
-def save_config(file, config):
-    pass
 
 
 def follow(file: TextIO, rate):
@@ -42,7 +40,6 @@ def replace(match):
 
 
 config = load_config("../config.yml")
-
 
 REPL_DICT = config["basic_substitutions"]
 REPL_PATTERN = re.compile("|".join(["\\b(" + v + ")\\b" for v in REPL_DICT.keys()]), flags=re.I)
