@@ -63,11 +63,14 @@ def __main__():
             for pattern, substitution in config["regex_substitutions"].items():
                 message = re.sub(pattern, substitution, message)
 
-            print(f"Speaking message: {message}")
+            print(f"Processed to: {message}")
             with tempfile.TemporaryDirectory(prefix="sapphone.") as tmpdir:
                 output_file = os.path.join(tmpdir, "output.wav")
+                print("awaiting output from engine...")
                 engine.speak_to_file(output_file, message)
+                print("playing output...")
                 audio.play_sound(output_file)
+                print("done!")
 
 
 if __name__ == "__main__":
