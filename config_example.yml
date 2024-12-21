@@ -12,7 +12,7 @@ tts:
   # disabling does not do anything currently
   enabled: true
   # specify which engine to use
-  engine: sam
+  engine: google-tts
   engines:
     # engine: engine config
     sapi:
