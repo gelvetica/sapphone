@@ -1,5 +1,5 @@
 import re
-from io import TextIOWrapper
+from typing import TextIO
 
 import yaml
 import time
@@ -25,7 +25,7 @@ def save_config(file, config):
     pass
 
 
-def follow(file: TextIOWrapper, rate):
+def follow(file: TextIO, rate):
     file.seek(0, 2)
 
     while True:
