@@ -1,4 +1,6 @@
 import re
+from io import TextIOWrapper
+
 import yaml
 import time
 import mpv
@@ -23,7 +25,7 @@ def save_config(file, config):
     pass
 
 
-def follow(file, rate):
+def follow(file: TextIOWrapper, rate):
     file.seek(0, 2)
 
     while True:
