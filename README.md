@@ -22,8 +22,6 @@ was originally developed by Digital Equipment Corporation, with later additions 
 
 Extract the archive, and in the engine config, point `path_to_executable` to the absolute path of the `say` executable.
 
-Note that sapphone does not currently support DECTalk on MacOS.
-
 ### modern-sam
 [Software Automatic Mouth](https://en.wikipedia.org/wiki/Software_Automatic_Mouth)
 was originally developed by Don't Ask Software. It was ported to C by [s-macke](https://github.com/s-macke), then Javascript by [discordier](https://github.com/discordier),
