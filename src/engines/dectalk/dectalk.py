@@ -41,12 +41,23 @@ class SapphoneEngine:
         args += ["-a", script]
         subprocess.run(args, shell=False, check=True)
 
+    def dectalk_macos(self, script, output):
+        args = [self.config.engine.path_to_executable]
+        if self.config.advanced.prefix:
+            args += ["-pre", self.config.advanced.prefix]
+        if self.config.advanced.suffix:
+            args += ["-post", self.config.advanced.suffix]
+        args += ["-fo", output]
+        args += ["-a", script]
+        subprocess.run(args, shell=False, check=True)
+
     def speak_to_file(self, script, output):
         if sys.platform in ["win32", "cygwin"]:
             self.dectalk_windows(script, output)
         elif sys.platform == "linux":
             self.dectalk_linux(script, output)
         elif sys.platform == "darwin":
-            print("I am so sorry.")
-            raise OSError
+            self.dectalk_macos(script, output)
+        else:
+            raise OSError("I'm so sorry. Please install a real OS. Or keep using FreeBSD because you're cool idk")
 
