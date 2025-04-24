@@ -89,5 +89,39 @@ def __main__():
                 print("done!")
 
 
+def party():
+    audio = Audio()
+    engines = {}
+    for key, value in config["partyphone"]["configs"].items():
+        conf = value["config"]
+        if "engine" in config["tts"]["engines"][value["engine"]]:
+            conf["engine"] = config["tts"]["engines"][value["engine"]]["engine"]
+        engines[key] = tts.SapphoneTTS(value["engine"], conf)
+
+    logfile = open(config["target_file"], "r", encoding='utf-8')
+    loglines = follow(logfile, config["refresh_rate"])
+
+    for line in loglines:
+        search = re.search(config["target_pattern"], line)
+        if search:
+            message = search.group("script")
+            key = search.group("key")
+            if key not in engines.keys():
+                print("rejected message with key " + key)
+                continue
+            print(f"Received message: {message}")
+            message = re.sub(REPL_PATTERN, replace, message)
+            for pattern, substitution in config["regex_substitutions"].items():
+                message = re.sub(pattern, substitution, message)
+
+            print(f"Processed to: {message}")
+            with tempfile.TemporaryDirectory(prefix="sapphone.") as tmpdir:
+                output_file = os.path.join(tmpdir, "output.wav")
+                print("awaiting output from engine...")
+                engines[key].speak_to_file(output_file, message)
+                print("playing output...")
+                audio.play_sound(output_file)
+                print("done!")
+
 if __name__ == "__main__":
-    __main__()
+    party()

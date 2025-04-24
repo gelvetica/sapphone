@@ -63,3 +63,30 @@ basic_substitutions:
 regex_substitutions:
   # pattern: string
   '\B:3\b': meow
+# PARTYPHONE!!!
+# inherits engine configs from engines above
+# your target pattern must have a key group and a script group
+# ex for minecraft: '^[^<]*<(?P<key>[^>]*)> (?P<script>.*)'
+partyphone:
+  enabled: true
+  configs:
+    PetBat:
+      engine: google-tts
+      config:
+        voice:
+          lang: pt
+          tld: com.br
+          slow: False
+    General D:
+      engine: dectalk
+      config:
+        advanced:
+          prefix: "[:phone on][:nk]"
+          suffix: ""
+    Emerald:
+      engine: google-tts
+      config:
+        voice:
+          lang: en
+          tld: co.uk
+          slow: False
