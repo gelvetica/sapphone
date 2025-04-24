@@ -1,12 +1,13 @@
 # win32com might not be necessary here
 # pyttsx uses comtypes but it still depends on win32com ???
-from dataclasses import field
-from typing import Any
-from pydantic import BaseModel, Field, BeforeValidator, ValidationError
-from typing_extensions import Annotated
 import sys
-import win32com.client
+from typing import Any
+
 import comtypes.client
+import win32com.client
+from pydantic import BaseModel, Field, BeforeValidator
+from typing_extensions import Annotated
+
 try:
     from comtypes.gen import SpeechLib
 except ImportError:
@@ -14,6 +15,7 @@ except ImportError:
     engine = comtypes.client.CreateObject("SAPI.SpVoice")
     stream = comtypes.client.CreateObject("SAPI.SpFileStream")
     from comtypes.gen import SpeechLib
+
 
 # This is improper
 
@@ -33,10 +35,14 @@ def voices_helper(value: Any) -> Any:
 
 
 class VoiceModel(BaseModel):
-    voice: Annotated[str, Field(default="default value that causes it to fail", validate_default=True, title="Voice"), BeforeValidator(voices_helper)]
+    voice: Annotated[str, Field(default="default value that causes it to fail", validate_default=True,
+                                title="Voice"), BeforeValidator(voices_helper)]
     rate: float = Field(default=0, ge=-10, le=10, title="Rate")
+
+
 class ConfigModel(BaseModel):
     voice: VoiceModel = Field(default_factory=VoiceModel, title="Voice")
+
 
 # list of voice token attributes for testing
 sapi_attributes = ["Name", "Gender", "Age", "Language", "Vendor"]
@@ -44,6 +50,7 @@ sapi_attributes = ["Name", "Gender", "Age", "Language", "Vendor"]
 
 class SapphoneEngine:
     ConfigModel = ConfigModel
+
     def __init__(self, config):
         self.config = config
         self.tts = win32com.client.Dispatch("SAPI.SpVoice")

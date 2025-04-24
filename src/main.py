@@ -1,12 +1,14 @@
-import re
-from typing import TextIO
-from platformdirs import PlatformDirs
-import sys
-import yaml
-import time
-import mpv
-import tempfile
 import os
+import re
+import sys
+import tempfile
+import time
+from typing import TextIO
+
+import mpv
+import yaml
+from platformdirs import PlatformDirs
+
 import tts
 
 
@@ -38,6 +40,7 @@ def follow(file: TextIO, rate):
 
 def replace(match):
     return REPL_INDEX[match.lastindex - 1]
+
 
 datadir = PlatformDirs("sapphone", "toasterovenxyz").user_data_dir
 if "SAPPHONE_DATADIR" in os.environ:

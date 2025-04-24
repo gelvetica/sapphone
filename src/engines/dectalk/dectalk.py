@@ -1,21 +1,28 @@
 import subprocess
 import sys
+
 from pydantic import BaseModel, Field
 
 
 class AdvancedConfig(BaseModel):
-    prefix: str = Field(default="", title="Prefix", description="Text to be passed to DECtalk Software before the normal input. The prefix text is \"forced\" out before the input text is read.")
-    suffix: str = Field(default="", title="Suffix", description="Text to be passed to DECtalk Software after the normal input. ")
+    prefix: str = Field(default="", title="Prefix",
+                        description="Text to be passed to DECtalk Software before the normal input. The prefix text is \"forced\" out before the input text is read.")
+    suffix: str = Field(default="", title="Suffix",
+                        description="Text to be passed to DECtalk Software after the normal input. ")
+
 
 class EngineConfig(BaseModel):
     path_to_executable: str = Field(title="Path to executable", description="The path to your DECtalk say executable.")
+
 
 class ConfigModel(BaseModel):
     advanced: AdvancedConfig = Field(title="Advanced", default_factory=AdvancedConfig)
     engine: EngineConfig = Field(title="Engine", default_factory=EngineConfig)
 
+
 class SapphoneEngine:
     ConfigModel = ConfigModel
+
     def __init__(self, config: ConfigModel):
         self.config: ConfigModel = config
 
@@ -27,7 +34,7 @@ class SapphoneEngine:
         if self.config.advanced.suffix != "":
             args += ["-post", self.config.advanced.suffix]
         args += ["-w", output]
-        #args.append(script)
+        # args.append(script)
         subprocess.run(args, shell=False, check=True, input=script, text=True)
 
     def dectalk_linux(self, script, output):
@@ -60,4 +67,3 @@ class SapphoneEngine:
             self.dectalk_macos(script, output)
         else:
             raise OSError("I'm so sorry. Please install a real OS. Or keep using FreeBSD because you're cool idk")
-

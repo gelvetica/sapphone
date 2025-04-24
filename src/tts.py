@@ -1,7 +1,9 @@
-from typing import Type
 import os
-import plugins
+from typing import Type
+
 from pydantic import BaseModel
+
+import plugins
 
 
 class SapphoneEngine:
@@ -16,6 +18,7 @@ class SapphoneEngine:
         """
         """
 
+
 class SapphoneTTS:
     def __init__(self, engine: str, config: dict):
         self.engine: Type[SapphoneEngine] = engines[engine].SapphoneEngine
@@ -24,7 +27,6 @@ class SapphoneTTS:
 
     def speak_to_file(self, output_file, script):
         self.instance.speak_to_file(script, output_file)
-
 
 
 PluginManager = plugins.PluginManager()
